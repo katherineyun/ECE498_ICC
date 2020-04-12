@@ -10,11 +10,14 @@
     }                                                                     \
   } while (0)
 
+
+#define TILE_WIDTH 4
 // Compute C = A * B
 __global__ void matrixMultiply(float *A, float *B, float *C, int numARows,
                                int numAColumns, int numBRows,
                                int numBColumns, int numCRows,
                                int numCColumns) {
+
    __shared__ float subTileM[TILE_WIDTH][TILE_WIDTH];
   __shared__ float subTileN[TILE_WIDTH][TILE_WIDTH];
 
@@ -93,7 +96,7 @@ int main(int argc, char **argv) {
 
   //@@ Initialize the grid and block dimensions here
   int WIDTH = 4.0;
-  dim3 dimGrid(ceil(numCColumns/WIDTH),ceil(numCRows/WIDTH),1); //inverse col and row
+  dim3 dimGrid(ceil(1.0*numCColumns/WIDTH),ceil(1.0*numCRows/WIDTH),1); //inverse col and row
   dim3 dimBlock(WIDTH,WIDTH,1);
   wbTime_start(Compute, "Performing CUDA computation");
   //@@ Launch the GPU Kernel here
